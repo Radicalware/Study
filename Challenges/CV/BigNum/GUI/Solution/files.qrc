@@ -1,0 +1,7 @@
+<RCC>
+<qresource prefix="/">
+    <file>view/main.qml</file>
+    <file>view/JavaScript/Action.js</file>
+    <file>resource/pictures/backdrop.jpg</file>
+</qresource>
+</RCC>

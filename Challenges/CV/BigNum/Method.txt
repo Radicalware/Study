@@ -1,0 +1,38 @@
+
+class Set
+{
+public:
+    uint val1;
+    uint val2;
+    uint val3;
+    uint val4;
+
+    int total()
+    {
+        return val1 * val2 * val3 * val4;
+    }
+
+    void operator<<(uint val)
+    {
+        val4 = val3;
+        val3 = val2;
+        val2 = val1;
+        val1 = val;
+    }
+}
+
+=====================================================================================================================
+
+Method Stream 
+
+    run set.total() as you iterate through each value in the stream
+
+=====================================================================================================================
+
+Method Multi-Thread
+
+    1. break the numbers into sections by how many threads you have
+    2. add to every next section the last 4 numbers to secure overlap possibility of bigger numbers
+    3. run the stream method shown above in parallel
+
+=====================================================================================================================
