@@ -8,17 +8,17 @@ Segment Algo::FindWithThreads(bool UseEightNums)
 {
     xvector<std::string_view> numStrs;
     std::string_view view = Algo::AllNumbers;
-    numStrs.resize(Nexus<>::Thread_Count());
+    numStrs.resize(Nexus<>::GetCPUThreadCount());
 
     int loc = 0;
-    const int UpSize = view.size() / Nexus<>::Thread_Count();
-    for (int i = 0; i < Nexus<>::Thread_Count(); i++)
+    const int UpSize = view.size() / Nexus<>::GetCPUThreadCount();
+    for (int i = 0; i < Nexus<>::GetCPUThreadCount(); i++)
     {
         numStrs[i] = view.substr(loc, static_cast<size_t>(loc) + UpSize + Algo::TargetNumSize);
         loc += UpSize;
     }
 
-    xvector<Segment> segs = numStrs.xrender<Segment>([&UseEightNums](const std::string_view& numStr)
+    xvector<Segment> segs = numStrs.ForEachThread<Segment>([&UseEightNums](const std::string_view& numStr)
     {
         return Algo::FindWithStream(
             UseEightNums,

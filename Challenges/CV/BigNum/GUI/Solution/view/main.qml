@@ -1,8 +1,8 @@
-import QtQuick 2.12 // version (look down at their chart): https://doc.qt.io/qt-5/qtquickcontrols-index.html
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1
-import QtGraphicalEffects 1
+import QtQuick
+import Qt5Compat.GraphicalEffects
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
 
 import "JavaScript/Action.js" as Action
 
@@ -26,7 +26,11 @@ Window {
         onClicked: {
             mTextArea1.text = mTextArea1.text.replace(/([^\d])/g,'')
             Core.AllNumbers = mTextArea1.text
+
             Core.FindNumberSequence();
+            // Processes data and then calls 
+            // calls Connections.onSigHighlightNumberSequence(uint location)
+            // calls Connections.OnSigDisplayNumChanged(const QString& str)
         }
     }
 
@@ -139,6 +143,7 @@ Window {
         }
     }
 
+    // Connection Signals are emitted from Q_INVOKABLE functions
     Connections {
         target: Core
 
@@ -146,7 +151,7 @@ Window {
             mTextArea1.text = Action.GetRandomNumbers()
             Core.AllNumbers = mTextArea1.text;
         }
-        onSigHighlightNumberSequence: {
+        onSigHighlightNumberSequence: { // args: { uint8 location }
             if (mSwitchSize.checked)
                 mTextArea1.select(location, location + 8);
             else

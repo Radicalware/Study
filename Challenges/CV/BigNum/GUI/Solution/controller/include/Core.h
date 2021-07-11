@@ -1,12 +1,10 @@
 #ifndef Core_H
 #define Core_H
 
+#include <type_traits>
 #include <iostream>
 #include <QObject>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QQmlApplicationEngine>
+#include <QtQml/QQmlApplicationEngine>
 
 #include "Algo.h"
 #include "xstring.h"
@@ -14,7 +12,6 @@
 
 
 #define self (*this)
-//#pragma comment(lib, "c:\\Source\\Contracts\\Corteva\\BigNum\\GUI\\Build\\Windows\\Debug\\Debug\\lib\\Algo.lib")
 
 
 using std::cout;
@@ -23,6 +20,7 @@ using std::endl;
 class Core : public QObject
 {
     Q_OBJECT
+
     Q_PROPERTY(
         QString AllNumbers
         READ    AllNumbers
@@ -64,15 +62,20 @@ class Core : public QObject
 
 public:
     explicit Core(QObject* parent = nullptr);
-    ~Core();
+    virtual ~Core();
     bool initialize();
 
+    // -------------------------------------------------------------------------
+    // Invokables
 public slots:
     Q_INVOKABLE void Generate();
     Q_INVOKABLE void FindNumberSequence();
 
 public:
-    // QProperties Start --------------------------------------------
+    // Invokables
+    // -------------------------------------------------------------------------
+    // QProperties Start 
+
     QString  AllNumbers() const;
     double   StopClock() const;
     QString  DisplayNum() const;
@@ -84,19 +87,29 @@ public:
     void SetUseThreading(bool truth);
     void SetUseEightNums(bool truth);
 
-signals: void sigAllNumbersChanged(const QString& str);
-signals: void sigStopClockChanged(const double val);
-signals: void sigDisplayNumChanged(const QString& str);
-signals: void sigUseThreadingChanged(bool truth);
-signals: void sigUseEightNumsChanged(bool truth);
-    // QProperties End -----------------------------------------------
+    signals: void sigAllNumbersChanged(const QString& str);
+    signals: void sigStopClockChanged(const double val);
+    signals: void sigDisplayNumChanged(const QString& str);
+    signals: void sigUseThreadingChanged(bool truth);
+    signals: void sigUseEightNumsChanged(bool truth);
 
-signals: void sigGenerate();
-signals: void sigHighlightNumberSequence(uint location);
-signals: void sigDisplayNumberFound();
+    // QProperties End
+    // -------------------------------------------------------------------------
+    // QML Connection Signals Start
 
-signals: void sigStartSearch();
-signals: void sigEndSearch();
+    signals: void sigGenerate(); 
+    signals: void sigHighlightNumberSequence(uint location);
+    signals: void sigDisplayNumberFound();
+    
+    // QML Connection Signals End
+    // -------------------------------------------------------------------------
+    // C++ Signals Start
+
+    signals: void sigStartSearch(); // Used to reset timer
+    signals: void sigEndSearch();   // Used to get time after search execution
+
+    // C++ Signals End
+    // -------------------------------------------------------------------------
 };
 
 #endif // Core_H

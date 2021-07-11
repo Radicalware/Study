@@ -1,6 +1,7 @@
 #include<Windows.h>
 
 #include <QGuiApplication>
+#include <type_traits>
 #include "Core.h"
 #include "Nexus.h"
 
@@ -8,12 +9,10 @@
 int main(int argc, char *argv[])
 {
     Nexus<>::Start();
-    LPCWSTR dll = L"C:\\SourceGUI\\Build\\Windows\\Release\\Release\\bin\\qml\\QtQuick.2\\qtquick2plugin.dll";
-    HMODULE qtquick2plugin_dll = LoadLibrary(dll);
-    cout << qtquick2plugin_dll << endl;
+    
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     QGuiApplication app(argc, argv);
+
     Core core;
     int retValue = 0;
 

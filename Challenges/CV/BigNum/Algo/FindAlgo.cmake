@@ -12,13 +12,12 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(BUILD_SHARED_LIBS ON)
 
 UNSET(PROJECT_FILES)
-SUBDIRLIST(PROJECT_FILES "${ALGO_DIR}")
+find_program_files(PROJECT_FILES "${ALGO_DIR}")
 
 add_library(${LIB} SHARED ${PROJECT_FILES})
 add_library(Example::${LIB} ALIAS ${LIB})
 
 target_include_directories(${LIB} PUBLIC
-
     ${ALGO_DIR}/include
     ${EXT_HEADER_PATH}
 )
@@ -32,7 +31,5 @@ target_link_libraries(${LIB} Radical_Mod::re2)
 
 # -------------------------- POST-CONFIG --------------------------------------
 set(PROJECT_DIR "${CMAKE_CURRENT_LIST_DIR}")
-set(LIB "Project")
-CONFIGURE_VISUAL_STUDIO_PROJECT(${PROJECT_FILES})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # -------------------------- END ----------------------------------------------

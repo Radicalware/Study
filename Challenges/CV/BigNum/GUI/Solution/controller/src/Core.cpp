@@ -12,9 +12,11 @@
 
 Core::Core(QObject *parent) : QObject(parent)
 {
+    // connect >> this objects function to this lambda
+    // so when the statef function is called, the lambda is executed
     self.connect(this, &Core::sigStartSearch, [this]() {
-        mTimer.clear(); // clears out recored lap times
-        mTimer.reset(); // resets the timer to 0
+        mTimer.Clear(); // clears out recored lap times
+        mTimer.Reset(); // resets the timer to 0
     });
 
     self.connect(this, &Core::sigEndSearch, [this]() {
@@ -64,8 +66,8 @@ QString Core::AllNumbers() const {
 
 double Core::StopClock() const
 {
-    if (mTimer.get_xvector().size())
-        return mTimer.get(0);
+    if (mTimer.GetVector().size())
+        return mTimer.Get(0);
     else
         return 0;
 }
@@ -93,11 +95,11 @@ void Core::SetAllNumbers(const QString& str){
 
 void Core::SetStopClock(uint unused)
 {
-    mTimer.lap(); // recoreds the stopwatch
+    mTimer.Lap(); // recoreds the stopwatch
 
     // emit self.sigStopClockChanged(mTimer.get(0)); // I prefer the method below
     mEngine.rootContext()->setContextProperty("vDisplayTimer", QVariant::fromValue(
-        QString("Exe Time: ") + QString::number(mTimer.get(0), 'd', 3)
+        QString("Exe Time: ") + QString::number(mTimer.Get(0), 'd', 3)
         //QString("Exe Time: ")+ QString::number(mTimer.get(0))
     ));
 }
