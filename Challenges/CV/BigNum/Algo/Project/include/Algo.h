@@ -3,26 +3,26 @@
 #include <iostream>
 #include <string>
 
+#include "Macros.h"
 #include "xstring.h"
-#include "xmap.h"
 
 #include "Segment.h"
 
 using std::cout;
 using std::endl;
 
-class Algo
+class __declspec(dllexport) Algo
 {
-    static int TargetNumSize;
+    inline static int TargetNumSize = 0;
 
     static Segment FindWithThreads(bool UseEightNums);
     static Segment FindWithStream(bool UseEightNums, const std::string_view& numbers);
 
 public:
-    static xstring AllNumbers;
-    static xstring DisplayStr;
+    inline static xstring AllNumbers;
+    inline static xstring DisplayStr;
 
-    static unsigned int FindDisplayStr(bool UseThreading, bool UseEightNums);
+    static pint FindDisplayStr(bool UseThreading, bool UseEightNums);
 
     static void SetAllNumbers(const xstring& nums);
     static xstring GetAllNumbers();

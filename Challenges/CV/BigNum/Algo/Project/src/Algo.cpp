@@ -1,9 +1,5 @@
 #include "Algo.h"
 
-int Algo::TargetNumSize = 0;
-xstring Algo::AllNumbers;
-xstring Algo::DisplayStr;
-
 Segment Algo::FindWithThreads(bool UseEightNums)
 {
     xvector<std::string_view> numStrs;
@@ -51,7 +47,7 @@ Segment Algo::FindWithStream(bool UseEightNums, const std::string_view& numbers)
 }
 
 
-unsigned int Algo::FindDisplayStr(bool UseThreading, bool UseEightNums)
+pint Algo::FindDisplayStr(bool UseThreading, bool UseEightNums)
 {
     Algo::TargetNumSize = (UseEightNums) ? 8 : 4;
     Segment seg;
